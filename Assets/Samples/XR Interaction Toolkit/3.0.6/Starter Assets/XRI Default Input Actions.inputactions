@@ -27,7 +27,7 @@
                     "name": "Is Tracked",
                     "type": "Button",
                     "id": "6bb4e248-e42b-47c3-b66c-79566508ca74",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -92,6 +92,17 @@
                 },
                 {
                     "name": "",
+                    "id": "8e28bba6-2abe-4a17-ab88-cc49a49d89f8",
+                    "path": "<XRInputV1::Oculus::OpenVRHeadsetMetaQuest3>/deviceposition",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "4d22c160-9642-4784-bed3-f108d9099185",
                     "path": "<HandheldARInputDevice>/devicePosition",
                     "interactions": "",
@@ -105,6 +116,17 @@
                     "name": "",
                     "id": "e2017383-a3f6-4c46-acb1-012b8eece9cc",
                     "path": "<XRHMD>/centerEyeRotation",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5a1c911e-3321-4609-9f5f-5d46a9194636",
+                    "path": "<XRInputV1::Oculus::OpenVRHeadsetMetaQuest3>/devicerotation",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

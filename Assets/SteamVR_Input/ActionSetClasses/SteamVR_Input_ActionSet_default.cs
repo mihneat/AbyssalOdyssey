@@ -105,6 +105,22 @@ namespace Valve.VR
             }
         }
         
+        public virtual SteamVR_Action_Boolean ShootHarpoon
+        {
+            get
+            {
+                return SteamVR_Actions.default_ShootHarpoon;
+            }
+        }
+        
+        public virtual SteamVR_Action_Single HarpoonTriggerAmount
+        {
+            get
+            {
+                return SteamVR_Actions.default_HarpoonTriggerAmount;
+            }
+        }
+        
         public virtual SteamVR_Action_Vibration Haptic
         {
             get

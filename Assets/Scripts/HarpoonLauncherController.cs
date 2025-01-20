@@ -50,6 +50,7 @@ namespace Scripts
 
         public event Action<Harpoonable> OnSurfaceHit;
         public event Action<bool> OnHarpoonReset;
+        public event Action<Harpoonable> OnCaughtObject;
         
         private Interactable interactable;
 
@@ -379,7 +380,7 @@ namespace Scripts
 
         private void RewardObjectCaught(Harpoonable caughtObj)
         {
-            
+            OnCaughtObject?.Invoke(caughtObj);
         }
     }
 }

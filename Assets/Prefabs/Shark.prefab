@@ -76,6 +76,10 @@ PrefabInstance:
       value: Shark
       objectReference: {fileID: 0}
     - target: {fileID: 4465814709763547335, guid: 899130ea84d443148bd02e265dfce56d, type: 3}
+      propertyPath: value
+      value: 130
+      objectReference: {fileID: 0}
+    - target: {fileID: 4465814709763547335, guid: 899130ea84d443148bd02e265dfce56d, type: 3}
       propertyPath: panicSpeed
       value: 4.8
       objectReference: {fileID: 0}

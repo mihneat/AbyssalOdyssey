@@ -1838,6 +1838,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bab11c42a15f1ac499933e1a730e675b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  harpoonLauncherController: {fileID: 1860808291}
   backgroundSongs:
   - {fileID: 8300000, guid: aef91778666422f4b83c00e579ed2f2f, type: 3}
   - {fileID: 8300000, guid: bb102a82c4ec217499a02dba09af14ab, type: 3}
@@ -2259,6 +2260,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1cfeafcabe31b545a6a742f2b3266c2, type: 3}
+--- !u!114 &1860808291 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4032046727928116251, guid: 7f9855bf7f737ae4eadf8c18e25c6a88, type: 3}
+  m_PrefabInstance: {fileID: 866246910}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ea7de5309a6f724d9370a1eee7318a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1903393051
 PrefabInstance:
   m_ObjectHideFlags: 0

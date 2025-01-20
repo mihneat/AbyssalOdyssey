@@ -8,6 +8,8 @@ namespace Scripts.Audio
     [RequireComponent(typeof(AudioSource))]
     public class BackgroundMusicManager : MonoBehaviour
     {
+        [SerializeField] private HarpoonLauncherController harpoonLauncherController;
+        
         [SerializeField] private List<AudioClip> backgroundSongs;
         [SerializeField] private List<AudioClip> fishReelingSongs;
 
@@ -21,6 +23,18 @@ namespace Scripts.Audio
 
             SetRandomSong(0, backgroundSongs);
             audioSources[0].Play();
+        }
+
+        private void OnEnable()
+        {
+            harpoonLauncherController.OnSurfaceHit += HandleOnSurfaceHit;
+            harpoonLauncherController.OnHarpoonReset += HandleOnHarpoonReset;
+        }
+
+        private void OnDisable()
+        {
+            harpoonLauncherController.OnSurfaceHit -= HandleOnSurfaceHit;
+            harpoonLauncherController.OnHarpoonReset -= HandleOnHarpoonReset;
         }
 
         private void Update()
@@ -42,6 +56,20 @@ namespace Scripts.Audio
             }
             
             audioSources[index].clip = clips[Random.Range(0, clips.Count)];
+        }
+
+        private void HandleOnSurfaceHit(Harpoonable stuckObject)
+        {
+            audioSources[0].Pause();
+            
+            SetRandomSong(1, fishReelingSongs);
+            audioSources[1].Play();
+        }
+
+        private void HandleOnHarpoonReset(bool isCatchSuccessful)
+        {
+            audioSources[0].UnPause();
+            audioSources[1].Stop();
         }
     }
 }

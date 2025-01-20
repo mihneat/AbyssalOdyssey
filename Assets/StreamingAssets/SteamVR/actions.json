@@ -58,6 +58,10 @@
       "type": "vector1"
     },
     {
+      "name": "/actions/default/in/ResetHarpoon",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },
@@ -179,7 +183,8 @@
       "/actions/default/in/SnapTurnLeft": "Snap Turn (Left)",
       "/actions/default/in/SnapTurnRight": "Snap Turn (Right)",
       "/actions/default/in/ShootHarpoon": "Shoot Harpoon",
-      "/actions/default/in/HarpoonTriggerAmount": "Harpoon Trigger Amount"
+      "/actions/default/in/HarpoonTriggerAmount": "Harpoon Trigger Amount",
+      "/actions/default/in/ResetHarpoon": "Reset Harpoon"
     }
   ]
 }

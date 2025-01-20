@@ -30,13 +30,29 @@ namespace Scripts
         [BoxGroup("Harpoon Config")]
         [SerializeField] private float stopFactor = 10.0f;
         
+        [BoxGroup("Resistance Meter")]
+        [SerializeField] private ResistanceMeter resistanceMeter;
+        [BoxGroup("Resistance Meter")]
+        [SerializeField] private float tensionIncreaseRate = 0.2f;
+        [BoxGroup("Resistance Meter")]
+        [SerializeField] private float tensionDecayRate = 0.4f;
+
+        public Action<Harpoonable> OnSurfaceHit;
+        public Action<bool> OnHarpoonReset;
+        
         private Interactable interactable;
 
         private Hand harpoonLauncherHand;
 
         private Transform harpoon;
         private Rigidbody harpoonRb;
+        private BoxCollider harpoonCollider;
         private HarpoonState harpoonState = HarpoonState.Loaded;
+
+        private Harpoonable stuckObject;
+        private Rigidbody stuckObjectRb;
+
+        private float tension;
 
         private void Awake()
         {
@@ -44,6 +60,11 @@ namespace Scripts
             
             harpoon = harpoonController.transform;
             harpoonRb = harpoon.GetComponent<Rigidbody>();
+            harpoonCollider = harpoon.GetComponent<BoxCollider>();
+
+            harpoonCollider.enabled = false;
+
+            harpoonController.OnHitSurface += HandleOnHitSurface;
         }
 
         private void OnEnable()
@@ -56,6 +77,8 @@ namespace Scripts
             
             SteamVR_Actions._default.HarpoonTriggerAmount.AddOnChangeListener(HandleHarpoonTriggerAmount, SteamVR_Input_Sources.LeftHand);
             SteamVR_Actions._default.HarpoonTriggerAmount.AddOnChangeListener(HandleHarpoonTriggerAmount, SteamVR_Input_Sources.RightHand);
+            
+            SteamVR_Actions._default.ResetHarpoon.AddOnChangeListener(HandleOnResetHarpoon, SteamVR_Input_Sources.Any);
         }
 
         private void OnDisable()
@@ -68,34 +91,65 @@ namespace Scripts
             
             SteamVR_Actions._default.HarpoonTriggerAmount.RemoveOnChangeListener(HandleHarpoonTriggerAmount, SteamVR_Input_Sources.LeftHand);
             SteamVR_Actions._default.HarpoonTriggerAmount.RemoveOnChangeListener(HandleHarpoonTriggerAmount, SteamVR_Input_Sources.RightHand);
+            
+            SteamVR_Actions._default.ResetHarpoon.RemoveOnChangeListener(HandleOnResetHarpoon, SteamVR_Input_Sources.Any);
+        }
+
+        private void Update()
+        {
+            resistanceMeter.UpdateTension(tension);
         }
 
         private void FixedUpdate()
         {
-            if (harpoonState == HarpoonState.Retracting)
+            switch (harpoonState)
             {
-                // Translate the harpoon towards the launcher
-                harpoonRb.linearVelocity = (harpoonSpot.position - harpoon.transform.position).normalized * retractSpeed;
+                case HarpoonState.Retracting:
+                    if (stuckObject == null)
+                    {
+                        // Translate the harpoon towards the launcher
+                        harpoonRb.linearVelocity = (harpoonSpot.position - harpoon.transform.position).normalized * retractSpeed;
                 
-                // Snap the harpoon when it's close
-                if (Vector3.Distance(harpoonSpot.position, harpoon.transform.position) < 0.15f)
-                {
-                    AttachHarpoonToLauncher();
-                    harpoonState = HarpoonState.Loaded;
-                }
+                        // Snap the harpoon when it's close
+                        if (Vector3.Distance(harpoonSpot.position, harpoon.transform.position) < 0.15f)
+                        {
+                            AttachHarpoonToLauncher();
+                            harpoonState = HarpoonState.Loaded;
+                        }
+                    }
+                    else
+                    {
+                        // Translate the harpoon towards the launcher
+                        stuckObjectRb.linearVelocity = (harpoonSpot.position - harpoon.transform.position).normalized * retractSpeed / (1.0f + stuckObject.resistance);
+                
+                        // Snap the harpoon when it's close
+                        if (Vector3.Distance(harpoonSpot.position, harpoon.transform.position) < 0.15f)
+                        {
+                            ResetHarpoon(true);
+                            break;
+                        }
+                        
+                        tension = Mathf.Clamp01(tension + tensionIncreaseRate * Time.fixedDeltaTime);
+                    }
+
+                    break;
             }
+            
+            // Constantly decrease tension in any other state
+            if (harpoonState != HarpoonState.Retracting)
+                tension = Mathf.Clamp01(tension - tensionDecayRate * Time.fixedDeltaTime);
         }
 
         private void HandleOnAttachedToHand(Hand hand)
         {
-            Debug.Log($"[HarpoonLauncherController] Harpoon launcher attached to hand: {hand.handType}");
+            // Debug.Log($"[HarpoonLauncherController] Harpoon launcher attached to hand: {hand.handType}");
 
             harpoonLauncherHand = hand;
         }
 
         private void HandleOnDetachedFromHand(Hand hand)
         {
-            Debug.Log($"[HarpoonLauncherController] Harpoon launcher detached from hand: {hand.handType}");
+            // Debug.Log($"[HarpoonLauncherController] Harpoon launcher detached from hand: {hand.handType}");
 
             if (harpoonLauncherHand != null)
                 HandleTriggerButtonReleased();
@@ -128,7 +182,7 @@ namespace Scripts
             if (harpoonLauncherHand.handType != fromSource)
                 return;
 
-            Debug.Log($"[HarpoonLauncherController] Trigger amount changed to: {triggerAmount}");
+            // Debug.Log($"[HarpoonLauncherController] Trigger amount changed to: {triggerAmount}");
             
             triggerController.SetInterpolationValue(triggerAmount);
         }
@@ -180,19 +234,32 @@ namespace Scripts
             DetachHarpoonFromLauncher();
             harpoonRb.AddForce(-harpoon.forward * 1000.0f * shootForce);
 
+            harpoonCollider.enabled = true;
+
             harpoonState = HarpoonState.Shooting;
         }
 
         private void StopHarpoon()
         {
             // Reduce the velocity of the harpoon
-            harpoonRb.linearVelocity /= stopFactor;
+            if (stuckObject == null)
+            {
+                harpoonRb.linearVelocity /= stopFactor;
+            }
+            else
+            {
+                stuckObjectRb.linearVelocity /= stopFactor;
+                stuckObject.OnStopReeling();
+            }
 
             harpoonState = HarpoonState.Stationary;
         }
 
         private void RetractHarpoon()
         {
+            if (stuckObject != null)
+                stuckObject.OnStartReeling();
+            
             harpoonState = HarpoonState.Retracting;
         }
 
@@ -208,6 +275,51 @@ namespace Scripts
         {
             harpoonRb.isKinematic = false;
             harpoon.parent = null;
+        }
+
+        private void HandleOnHitSurface(Harpoonable harpoonableSurface)
+        {
+            // Stick the harpoon to the surface
+            stuckObject = harpoonableSurface;
+            stuckObjectRb = stuckObject.GetComponent<Rigidbody>();
+            
+            harpoon.parent = harpoonableSurface.transform;
+            harpoonRb.isKinematic = true;
+            
+            harpoonCollider.enabled = false;
+            
+            resistanceMeter.ToggleVisibility(true);
+            
+            OnSurfaceHit?.Invoke(harpoonableSurface);
+        }
+
+        private void HandleOnResetHarpoon(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource, bool isClicked)
+        {
+            ResetHarpoon(false);
+        }
+
+        private void ResetHarpoon(bool isCatchSuccessful)
+        {
+            AttachHarpoonToLauncher();
+            harpoonController.ReleaseHarpoon();
+            
+            if (stuckObject != null)
+            {
+                stuckObject.OnReelResult(isCatchSuccessful);
+                stuckObject.OnStopReeling();
+            }
+            
+            stuckObject = null;
+            stuckObjectRb = null;
+
+            // TOO BROKEN no thanks
+            // tension = 0.0f;
+            
+            resistanceMeter.ToggleVisibility(false);
+                        
+            harpoonState = HarpoonState.Loaded;
+            
+            OnHarpoonReset?.Invoke(isCatchSuccessful);
         }
     }
 }

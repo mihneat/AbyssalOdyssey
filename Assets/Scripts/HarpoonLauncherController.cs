@@ -36,9 +36,20 @@ namespace Scripts
         [SerializeField] private float tensionIncreaseRate = 0.2f;
         [BoxGroup("Resistance Meter")]
         [SerializeField] private float tensionDecayRate = 0.4f;
+        
+        [BoxGroup("Sounds")]
+        [SerializeField] private AudioSource audioLoopSource;
+        [BoxGroup("Sounds")]
+        [SerializeField] private AudioClip cableBreak;
+        [BoxGroup("Sounds")]
+        [SerializeField] private AudioClip reelOut;
+        [BoxGroup("Sounds")]
+        [SerializeField] private AudioClip reelIn;
+        [BoxGroup("Sounds")]
+        [SerializeField] private AudioClip shootClip;
 
-        public Action<Harpoonable> OnSurfaceHit;
-        public Action<bool> OnHarpoonReset;
+        public event Action<Harpoonable> OnSurfaceHit;
+        public event Action<bool> OnHarpoonReset;
         
         private Interactable interactable;
 
@@ -125,11 +136,21 @@ namespace Scripts
                         // Snap the harpoon when it's close
                         if (Vector3.Distance(harpoonSpot.position, harpoon.transform.position) < 0.15f)
                         {
+                            // Reward the player for catching the object
+                            RewardObjectCaught(stuckObject);
+                            
                             ResetHarpoon(true);
                             break;
                         }
                         
                         tension = Mathf.Clamp01(tension + tensionIncreaseRate * Time.fixedDeltaTime);
+                        if (Mathf.Abs(tension - 1.0f) < 0.01f)
+                        {
+                            // Break the line
+                            PlayOneShotSoundEffect(cableBreak);
+                            
+                            ResetHarpoon(false);
+                        }
                     }
 
                     break;
@@ -235,6 +256,9 @@ namespace Scripts
             harpoonRb.AddForce(-harpoon.forward * 1000.0f * shootForce);
 
             harpoonCollider.enabled = true;
+            
+            PlayOneShotSoundEffect(shootClip);
+            PlayContinuousSoundEffect(reelOut);
 
             harpoonState = HarpoonState.Shooting;
         }
@@ -251,6 +275,8 @@ namespace Scripts
                 stuckObjectRb.linearVelocity /= stopFactor;
                 stuckObject.OnStopReeling();
             }
+            
+            PauseContinuousSoundEffect();
 
             harpoonState = HarpoonState.Stationary;
         }
@@ -259,6 +285,8 @@ namespace Scripts
         {
             if (stuckObject != null)
                 stuckObject.OnStartReeling();
+            
+            PlayContinuousSoundEffect(reelIn);
             
             harpoonState = HarpoonState.Retracting;
         }
@@ -290,6 +318,8 @@ namespace Scripts
             
             resistanceMeter.ToggleVisibility(true);
             
+            PauseContinuousSoundEffect();
+            
             OnSurfaceHit?.Invoke(harpoonableSurface);
         }
 
@@ -318,8 +348,38 @@ namespace Scripts
             resistanceMeter.ToggleVisibility(false);
                         
             harpoonState = HarpoonState.Loaded;
+
+            PauseContinuousSoundEffect();
             
             OnHarpoonReset?.Invoke(isCatchSuccessful);
+        }
+
+        private void PlayContinuousSoundEffect(AudioClip audioClip)
+        {
+            audioLoopSource.Stop();
+
+            audioLoopSource.clip = audioClip;
+            audioLoopSource.Play();
+        }
+
+        private void PauseContinuousSoundEffect()
+        {
+            audioLoopSource.Pause();
+        }
+
+        private void UnpauseContinuousSoundEffect()
+        {
+            audioLoopSource.UnPause();
+        }
+
+        private void PlayOneShotSoundEffect(AudioClip audioClip)
+        {
+            AudioSource.PlayClipAtPoint(audioClip, transform.position);
+        }
+
+        private void RewardObjectCaught(Harpoonable caughtObj)
+        {
+            
         }
     }
 }

@@ -1135,6 +1135,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HarpoonLauncher
       objectReference: {fileID: 0}
+    - target: {fileID: 7473684283544267443, guid: 7f9855bf7f737ae4eadf8c18e25c6a88, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

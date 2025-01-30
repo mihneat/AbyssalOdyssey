@@ -9,44 +9,37 @@ namespace Scripts
     public class HarpoonRopeRenderer : MonoBehaviour
     {
         [SerializeField] private Vector3 startOffset;
-        [SerializeField] private float harpoonOffset;
-
-        [SerializeField] private Transform harpoon;
+        
+        [SerializeField] private Transform hookPoint;
+        [SerializeField] private Transform cableStartPoint;
 
         private LineRenderer lineRenderer;
         private readonly Vector3[] positions = new Vector3[2];
 
-        private Transform transformRef;
-
         private void Awake()
         {
-            lineRenderer = GetComponent<LineRenderer>();
-
-            transformRef = transform;
-            positions[0] = transformRef.position + transformRef.right * startOffset.x + transformRef.up * startOffset.y + transformRef.forward * startOffset.z;
-            positions[1] = harpoon.position + harpoon.forward * harpoonOffset;
-            
-            lineRenderer.SetPositions(positions);
+            UpdateLinePositions();
         }
 
         private void Update()
         {
-            positions[0] = transformRef.position + transformRef.right * startOffset.x + transformRef.up * startOffset.y + transformRef.forward * startOffset.z;
-            positions[1] = harpoon.position + harpoon.forward * harpoonOffset;
-            
-            lineRenderer.SetPositions(positions);
+            UpdateLinePositions();
         }
 
         private void OnValidate()
         {
-            if (harpoon == null)
-                return;
+            UpdateLinePositions();
+        }
 
-            var transform1 = transform;
-            positions[0] = transform1.position + transform1.right * startOffset.x + transform1.up * startOffset.y + transform1.forward * startOffset.z;
-            positions[1] = harpoon.position + harpoon.forward * harpoonOffset;
+        private void UpdateLinePositions()
+        {
+            positions[0] = cableStartPoint.position;
+            positions[1] = hookPoint.position;
             
-            GetComponent<LineRenderer>().SetPositions(positions);
+            if (lineRenderer == null)
+                lineRenderer = GetComponent<LineRenderer>();
+                    
+            lineRenderer.SetPositions(positions);
         }
     }
 }

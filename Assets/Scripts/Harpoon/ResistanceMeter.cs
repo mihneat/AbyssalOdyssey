@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace Scripts
+namespace Scripts.Harpoon
 {
     public class ResistanceMeter : MonoBehaviour
     {

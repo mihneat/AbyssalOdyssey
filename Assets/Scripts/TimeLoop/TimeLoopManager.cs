@@ -1,10 +1,13 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Scripts.TimeLoop
 {
@@ -17,6 +20,9 @@ namespace Scripts.TimeLoop
         }
 
         [SerializeField] private Volume volume;
+        [SerializeField] private float vignetteSpeed;
+        
+        [SerializeField] private Image deathImage;
         
         [SerializedDictionary("Timestamp", "List of events")]
         [SerializeField] private AYellowpaper.SerializedCollections.SerializedDictionary<float, UnityEvent> events;
@@ -67,16 +73,70 @@ namespace Scripts.TimeLoop
             Debug.Log("[TimeLoopManager] Strain");
 
             if (volume.profile.TryGet<Vignette>(out var vignette))
+                StartCoroutine(FadeVignette(vignette));
+        }
+
+        IEnumerator FadeVignette(Vignette vignette)
+        {
+            const float maxVignette = 0.4f;
+            while (true)
             {
-                Debug.Log("[TimeLoopManager] Changing vignette effect..");
-                vignette.intensity.value = 0.4f;
+                vignette.intensity.value = Mathf.Lerp(vignette.intensity.value, maxVignette, vignetteSpeed * Time.deltaTime);
+                if (Mathf.Abs(vignette.intensity.value - maxVignette) < 0.001f)
+                    break;
+                
+                yield return null;
             }
+
+            Debug.Log("[TimeLoopManager] Stopped vignette effect");
         }
 
         public void InfectPlayer()
         {
-            // TODO: Kill the player, reload the scene
             Debug.Log("[TimeLoopManager] Infected!!");
+            StartCoroutine(DeathFadeOut());
+        }
+
+        IEnumerator DeathFadeOut()
+        {
+            // Fade in purple
+            float t = 0.0f;
+            float purpleFadeInTime = 1.0f;
+            Color deathCol = deathImage.color;
+            deathCol.a = 1.0f;
+            while (t < purpleFadeInTime)
+            {
+                deathImage.color = new Color(deathCol.r, deathCol.g, deathCol.b, Mathf.Lerp(0.0f, 1.0f, t / purpleFadeInTime));
+
+                t += Time.deltaTime;
+                yield return null;
+            }
+
+            deathImage.color = deathCol;
+            
+            // Hold for a bit
+            t = 0.0f;
+            float holdTime = 0.7f;
+            while (t < holdTime)
+            {
+                t += Time.deltaTime;
+                yield return null;
+            }
+            
+            // Fade to black
+            t = 0.0f;
+            float fadeOutTime = 1.5f;
+            while (t < fadeOutTime)
+            {
+                float u = t / fadeOutTime;
+                deathImage.color = deathCol * (1 - u) + Color.black * u;
+                
+                t += Time.deltaTime;
+                yield return null;
+            }
+            
+            // Reload the scene
+            SceneManager.LoadScene(0);
         }
     }
 }

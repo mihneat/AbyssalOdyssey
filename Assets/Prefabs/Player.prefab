@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 2046175452547376962}
   - component: {fileID: 3652409183221625257}
   - component: {fileID: 6279556878644347679}
+  - component: {fileID: 7985183247822897839}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -422,7 +423,7 @@ MonoBehaviour:
     m_ActionName: 'Player/SwimVertical[/Keyboard/q,/Keyboard/e]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_DefaultActionMap: Cutscene
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &2046175452547376962
@@ -475,6 +476,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39f0f0a74f3ecaa4ea7d5e8b985709ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &7985183247822897839
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141343471695619477}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 54100e6e96890ca42b629851cce16df3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7854366281402170149
 GameObject:
   m_ObjectHideFlags: 0

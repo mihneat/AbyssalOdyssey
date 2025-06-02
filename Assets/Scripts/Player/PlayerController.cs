@@ -30,9 +30,14 @@ namespace Scripts.Player
 
         private Rigidbody rb;
 
+        private bool manuallyLockInput;
+
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
+            
+            // Input should be unlocked at the end of the start timeline
+            LockInput();
         }
 
         private void OnEnable()
@@ -84,23 +89,51 @@ namespace Scripts.Player
             cam.transform.localEulerAngles = currCamRotation;
         }
 
+        public void LockInput()
+        {
+            if (!Application.isPlaying)
+                return;
+
+            manuallyLockInput = true;
+        }
+
+        public void UnlockInput()
+        {
+            if (!Application.isPlaying)
+                return;
+
+            manuallyLockInput = false;
+        }
+
         public void HandleOnMove(InputAction.CallbackContext ctx)
         {
+            if (manuallyLockInput)
+                return;
+            
             moveVec = ctx.ReadValue<Vector2>();
         }
         
         public void HandleOnLook(InputAction.CallbackContext ctx)
         {
+            if (manuallyLockInput)
+                return;
+            
             lookVec = ctx.ReadValue<Vector2>();
         }
         
         public void HandleOnSwimVertical(InputAction.CallbackContext ctx)
         {
+            if (manuallyLockInput)
+                return;
+            
             swimVec = ctx.ReadValue<float>();
         }
         
         public void HandleOnInteract(InputAction.CallbackContext ctx)
         {
+            if (manuallyLockInput)
+                return;
+            
             if (ctx.ReadValueAsButton() == false)
                 return;
             
@@ -109,16 +142,25 @@ namespace Scripts.Player
         
         public void HandleOnSprint(InputAction.CallbackContext ctx)
         {
+            if (manuallyLockInput)
+                return;
+            
             isSprinting = ctx.ReadValueAsButton();
         }
         
         public void HandleOnHarpoonLaunch(InputAction.CallbackContext ctx)
         {
+            if (manuallyLockInput)
+                return;
+            
             harpoonLauncherController.HandleHarpoonLaunchButton(ctx.ReadValueAsButton());
         }
         
         public void HandleOnHarpoonReset(InputAction.CallbackContext ctx)
         {
+            if (manuallyLockInput)
+                return;
+            
             if (ctx.ReadValueAsButton() == false)
                 return;
             
@@ -127,6 +169,9 @@ namespace Scripts.Player
         
         public void HandleOnExitDrivingState(InputAction.CallbackContext ctx)
         {
+            if (manuallyLockInput)
+                return;
+            
             if (ctx.ReadValueAsButton() == false)
                 return;
             
@@ -135,11 +180,17 @@ namespace Scripts.Player
         
         public void HandleOnMoveSubmarine(InputAction.CallbackContext ctx)
         {
+            if (manuallyLockInput)
+                return;
+            
             OnMoveSubmarine?.Invoke(ctx.ReadValue<Vector3>());
         }
         
         public void HandleOnRotateSubmarine(InputAction.CallbackContext ctx)
         {
+            if (manuallyLockInput)
+                return;
+            
             OnRotateSubmarine?.Invoke(ctx.ReadValue<Vector2>());
         }
     }

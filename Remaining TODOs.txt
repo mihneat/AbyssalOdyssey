@@ -1,13 +1,13 @@
 ✓ make the submarine move and rotate
-- change player rigidbody values based on environment (air/water)
-- let the player swim
+✓ change player rigidbody values based on environment (air/water)
+✓ let the player swim
 ✓ disable the collision between fish and the player when reeling
-- create time loop mechanics
+✓ create time loop mechanics
 
 Optional:
 - smooth out submarine movement and rotation
-- add start-of-loop cinematic
-- oxygen meter???
+✓ add start-of-loop cinematic
+✓ oxygen meter???
 
 Future:
 - water planes should change the environment

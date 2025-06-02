@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Scripts.Harpoon;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

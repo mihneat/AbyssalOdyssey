@@ -16,9 +16,11 @@ namespace Scripts.Submarine
         private Vector3 moveVec;
         private Vector2 lookVec;
 
+        private Rigidbody rb;
+
         private void Awake()
         {
-            // TODO: Get the rigidbody
+            rb = GetComponent<Rigidbody>();
         }
 
         private void FixedUpdate()
@@ -28,8 +30,6 @@ namespace Scripts.Submarine
             transform.Translate(moveDir.normalized * (moveSpeed * Time.fixedDeltaTime), Space.World);
             
             // Rotate the submarine
-            // transform.localEulerAngles += new Vector3(-lookVec.y, lookVec.x, 0) * (lookSpeed * Time.fixedDeltaTime);
-            
             Vector3 currRotation = transform.localEulerAngles;
             currRotation += new Vector3(-lookVec.y, lookVec.x, 0) * (lookSpeed * Time.fixedDeltaTime);
 

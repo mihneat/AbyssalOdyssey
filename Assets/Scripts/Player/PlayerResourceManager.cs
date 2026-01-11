@@ -29,11 +29,11 @@ namespace Scripts.Player
 
         private void Update()
         {
-            if (environmentDetector.Environment == Environment.Air)
+            if (environmentDetector.HeadEnvironment == Environment.Air)
             {
                 // Recover O2
                 remainingOxygen = Mathf.Min(remainingOxygen + oxygenRecoveryRateSeconds * Time.deltaTime, oxygenTankCapacitySeconds);
-            } else if (environmentDetector.Environment == Environment.Underwater)
+            } else if (environmentDetector.HeadEnvironment == Environment.Underwater)
             {
                 // Lose O2
                 remainingOxygen -= Time.deltaTime;

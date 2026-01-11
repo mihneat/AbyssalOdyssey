@@ -23,6 +23,7 @@ namespace Scripts.TimeLoop
         [SerializeField] private float vignetteSpeed;
         
         [SerializeField] private Image deathImage;
+        [SerializeField] private Image vignetteImage;
         
         [SerializedDictionary("Timestamp", "List of events")]
         [SerializeField] private AYellowpaper.SerializedCollections.SerializedDictionary<float, UnityEvent> events;
@@ -89,6 +90,31 @@ namespace Scripts.TimeLoop
             }
 
             Debug.Log("[TimeLoopManager] Stopped vignette effect");
+        }
+
+        public void StrainEyesVR()
+        {
+            // Slowly fade in the purple vignette
+            Debug.Log("[TimeLoopManager] Strain VR");
+
+            StartCoroutine(FadeVignetteVR());
+        }
+
+        IEnumerator FadeVignetteVR()
+        {
+            while (true)
+            {
+                Color currColor = vignetteImage.color;
+                currColor.a = Mathf.Lerp(currColor.a, 1.0f, vignetteSpeed * Time.deltaTime);
+                vignetteImage.color = currColor;
+                
+                if (Mathf.Abs(1.0f - currColor.a) < 0.001f)
+                    break;
+                
+                yield return null;
+            }
+
+            Debug.Log("[TimeLoopManager] Stopped vignette VR effect");
         }
 
         public void InfectPlayer()

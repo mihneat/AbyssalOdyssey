@@ -129,6 +129,30 @@ namespace Valve.VR
             }
         }
         
+        public virtual SteamVR_Action_Vector2 Move
+        {
+            get
+            {
+                return SteamVR_Actions.default_Move;
+            }
+        }
+        
+        public virtual SteamVR_Action_Vector2 SwimVertical
+        {
+            get
+            {
+                return SteamVR_Actions.default_SwimVertical;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean Jump
+        {
+            get
+            {
+                return SteamVR_Actions.default_Jump;
+            }
+        }
+        
         public virtual SteamVR_Action_Vibration Haptic
         {
             get

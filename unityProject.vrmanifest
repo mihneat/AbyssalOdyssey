@@ -5,7 +5,7 @@
       "app_key": "application.generated.unity.abyssalodyssey.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-      "action_manifest_path": "G:\\Unity\\PersonalProjects\\Abyssal Odyssey\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "action_manifest_path": "C:\\Users\\mihne\\Desktop\\Abyssal Odyssey\\AbyssalOdyssey\\Assets\\StreamingAssets\\SteamVR\\actions.json",
       "strings": {
         "en_us": {
           "name": "Abyssal Odyssey [Testing]"

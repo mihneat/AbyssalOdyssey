@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 2046175452547376962}
   - component: {fileID: 3652409183221625257}
   - component: {fileID: 6279556878644347679}
+  - component: {fileID: 5086897818541648277}
   - component: {fileID: 7985183247822897839}
   m_Layer: 9
   m_Name: Player
@@ -476,6 +477,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39f0f0a74f3ecaa4ea7d5e8b985709ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  oxygenDetector: {fileID: 0}
+  bodySubmergedDetector: {fileID: 0}
+--- !u!114 &5086897818541648277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141343471695619477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91b2abe3666404644a9a68948bbd1370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oxygenTankCapacity: 1
+  oxygenRecoveryRate: 0.5
+  environmentDetector: {fileID: 6279556878644347679}
+  deathImage: {fileID: 0}
+  oxygenMeter: {fileID: 0}
 --- !u!95 &7985183247822897839
 Animator:
   serializedVersion: 7
@@ -620,27 +640,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3323352765337699580, guid: 7f9855bf7f737ae4eadf8c18e25c6a88, type: 3}
       propertyPath: m_Positions.Array.data[0].x
-      value: -3.4104693
+      value: -3.345459
       objectReference: {fileID: 0}
     - target: {fileID: 3323352765337699580, guid: 7f9855bf7f737ae4eadf8c18e25c6a88, type: 3}
       propertyPath: m_Positions.Array.data[0].y
-      value: 7.931705
+      value: 7.835917
       objectReference: {fileID: 0}
     - target: {fileID: 3323352765337699580, guid: 7f9855bf7f737ae4eadf8c18e25c6a88, type: 3}
       propertyPath: m_Positions.Array.data[0].z
-      value: -25.655174
+      value: -24.960777
       objectReference: {fileID: 0}
     - target: {fileID: 3323352765337699580, guid: 7f9855bf7f737ae4eadf8c18e25c6a88, type: 3}
       propertyPath: m_Positions.Array.data[1].x
-      value: -3.4806058
+      value: -3.486639
       objectReference: {fileID: 0}
     - target: {fileID: 3323352765337699580, guid: 7f9855bf7f737ae4eadf8c18e25c6a88, type: 3}
       propertyPath: m_Positions.Array.data[1].y
-      value: 8.113932
+      value: 8.110722
       objectReference: {fileID: 0}
     - target: {fileID: 3323352765337699580, guid: 7f9855bf7f737ae4eadf8c18e25c6a88, type: 3}
       propertyPath: m_Positions.Array.data[1].z
-      value: -25.502169
+      value: -25.165356
       objectReference: {fileID: 0}
     - target: {fileID: 3674482536935898027, guid: 7f9855bf7f737ae4eadf8c18e25c6a88, type: 3}
       propertyPath: m_LocalPosition.z

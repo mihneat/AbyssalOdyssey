@@ -1,4 +1,5 @@
 using System;
+using Scripts.Volumes;
 using UnityEngine;
 
 namespace Scripts.Player
@@ -12,8 +13,8 @@ namespace Scripts.Player
     
     public class PlayerEnvironmentDetector : MonoBehaviour
     {
-        [SerializeField] private PlayerOxygenDetector oxygenDetector;
-        [SerializeField] private PlayerBodySubmergedDetector bodySubmergedDetector;
+        [SerializeField] private SubmergedDetector oxygenDetector;
+        [SerializeField] private SubmergedDetector bodySubmergedDetector;
         
         public Environment HeadEnvironment => currHeadEnvironment;
         private Environment currHeadEnvironment = Environment.Underwater;
@@ -29,14 +30,14 @@ namespace Scripts.Player
 
         private void OnEnable()
         {
-            oxygenDetector.OnHeadSubmergeChanged += HandleOnHeadSubmergeChanged;
-            bodySubmergedDetector.OnBodySubmergeChanged += HandleOnBodySubmergeChanged;
+            oxygenDetector.OnSubmergedStatusChanged += HandleOnHeadSubmergeChanged;
+            bodySubmergedDetector.OnSubmergedStatusChanged += HandleOnBodySubmergeChanged;
         }
 
         private void OnDisable()
         {
-            oxygenDetector.OnHeadSubmergeChanged -= HandleOnHeadSubmergeChanged;
-            bodySubmergedDetector.OnBodySubmergeChanged -= HandleOnBodySubmergeChanged;
+            oxygenDetector.OnSubmergedStatusChanged -= HandleOnHeadSubmergeChanged;
+            bodySubmergedDetector.OnSubmergedStatusChanged -= HandleOnBodySubmergeChanged;
         }
 
         private void HandleOnHeadSubmergeChanged(bool isSubmerged)

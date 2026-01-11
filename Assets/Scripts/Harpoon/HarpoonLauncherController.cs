@@ -1,5 +1,6 @@
 using System;
 using NaughtyAttributes;
+using Scripts.Volumes;
 using UnityEngine;
 using Valve.VR;
 using Valve.VR.InteractionSystem;
@@ -22,6 +23,8 @@ namespace Scripts.Harpoon
         [SerializeField] private HarpoonController harpoonController;
         [BoxGroup("Harpoon References")]
         [SerializeField] private HarpoonLauncherTriggerController triggerController;
+        [BoxGroup("Harpoon References")]
+        [SerializeField] private SubmergedDetector submergedDetector;
         
         [BoxGroup("Harpoon Config")]
         [SerializeField] private float shootForce = 3.0f;
@@ -56,6 +59,7 @@ namespace Scripts.Harpoon
 
         private Hand harpoonLauncherHand;
 
+        private Rigidbody rb;
         private Transform harpoon;
         private Rigidbody harpoonRb;
         private BoxCollider harpoonCollider;
@@ -70,6 +74,7 @@ namespace Scripts.Harpoon
         {
             interactable = GetComponent<Interactable>();
             
+            rb = GetComponent<Rigidbody>();
             harpoon = harpoonController.transform;
             harpoonRb = harpoon.GetComponent<Rigidbody>();
             harpoonCollider = harpoon.GetComponent<BoxCollider>();
@@ -83,6 +88,8 @@ namespace Scripts.Harpoon
         {
             interactable.onAttachedToHand += HandleOnAttachedToHand;
             interactable.onDetachedFromHand += HandleOnDetachedFromHand;
+
+            submergedDetector.OnSubmergedStatusChanged += HandleOnSubmergedStatusChanged;
             
             SteamVR_Actions._default.ShootHarpoon.AddOnChangeListener(HandleOnShootHarpoon, SteamVR_Input_Sources.LeftHand);
             SteamVR_Actions._default.ShootHarpoon.AddOnChangeListener(HandleOnShootHarpoon, SteamVR_Input_Sources.RightHand);
@@ -97,6 +104,8 @@ namespace Scripts.Harpoon
         {
             interactable.onAttachedToHand -= HandleOnAttachedToHand;
             interactable.onDetachedFromHand -= HandleOnDetachedFromHand;
+
+            submergedDetector.OnSubmergedStatusChanged -= HandleOnSubmergedStatusChanged;
             
             SteamVR_Actions._default.ShootHarpoon.RemoveOnChangeListener(HandleOnShootHarpoon, SteamVR_Input_Sources.LeftHand);
             SteamVR_Actions._default.ShootHarpoon.RemoveOnChangeListener(HandleOnShootHarpoon, SteamVR_Input_Sources.RightHand);
@@ -162,16 +171,26 @@ namespace Scripts.Harpoon
                 tension = Mathf.Clamp01(tension - tensionDecayRate * Time.fixedDeltaTime);
         }
 
+        private void HandleOnSubmergedStatusChanged(bool isSubmerged)
+        {
+            rb.linearDamping = isSubmerged ? 7.0f : 0.0f;
+            rb.angularDamping = isSubmerged ? 5.0f : 0.0f;
+        }
+
         private void HandleOnAttachedToHand(Hand hand)
         {
             // Debug.Log($"[HarpoonLauncherController] Harpoon launcher attached to hand: {hand.handType}");
 
+            rb.isKinematic = true;
             harpoonLauncherHand = hand;
+
         }
 
         private void HandleOnDetachedFromHand(Hand hand)
         {
             // Debug.Log($"[HarpoonLauncherController] Harpoon launcher detached from hand: {hand.handType}");
+            
+            rb.isKinematic = false;
 
             if (harpoonLauncherHand != null)
                 HandleReleased();

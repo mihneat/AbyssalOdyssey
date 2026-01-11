@@ -12,13 +12,18 @@ namespace Scripts.Player.VR
         [SerializeField] private Camera playerCamera;
         [SerializeField] private PlayerEnvironmentDetector environmentDetector;
         
-        [SerializeField] private float groundMoveSpeed;
-        [SerializeField] private float waterMoveSpeed;
+        [Tooltip("Only used to be activated after the player timeline ends")]
+        [SerializeField] private Collider bodySubmergedCollider;
+        
+        [SerializeField] private float groundMoveSpeed = 3.0f;
+        [SerializeField] private float waterMoveSpeed = 2.0f;
+        [SerializeField] private float jumpOutOfWaterMagnitude = 10.0f;
 
         private Rigidbody rb;
         
         private Vector2 moveVector;
         private float swimValue;
+        private bool shouldJumpNextFrame;
         
         private bool manuallyLockInput;
 
@@ -49,7 +54,7 @@ namespace Scripts.Player.VR
 
         private void Update()
         {
-            // Check for jump
+            PlayerJump();
         }
 
         private void FixedUpdate()
@@ -96,6 +101,18 @@ namespace Scripts.Player.VR
                 transform.Translate(finalMoveVector * moveSpeed * 0.02f);
         }
 
+        private void PlayerJump()
+        {
+            if (!shouldJumpNextFrame)
+                return;
+
+            shouldJumpNextFrame = false;
+
+            Vector3 linearVelocity = rb.linearVelocity;
+            linearVelocity.y = jumpOutOfWaterMagnitude;
+            rb.linearVelocity = linearVelocity;
+        }
+
         private void HandleOnEnvironmentChanged(Environment newEnvironment)
         {
             switch (newEnvironment)
@@ -129,6 +146,9 @@ namespace Scripts.Player.VR
                 return;
 
             manuallyLockInput = false;
+            
+            // Hack: Reactivate body submerged collider
+            bodySubmergedCollider.enabled = true;
         }
 
         private void HandleOnMove(SteamVR_Action_Vector2 fromAction, SteamVR_Input_Sources fromSource, Vector2 axis, Vector2 delta)
@@ -148,8 +168,8 @@ namespace Scripts.Player.VR
             
             if (currEnvironment != Environment.HalfUnderwater)
                 return;
-            
-            // TODO: JUMP (don't forget to limit vertical momentum)
+
+            shouldJumpNextFrame = true;
         }
     }
 }

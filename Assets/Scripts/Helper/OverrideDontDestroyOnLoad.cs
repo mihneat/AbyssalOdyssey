@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Scripts.Player.VR
+namespace Scripts.Helper
 {
-    public class PlayerOverrideDontDestroyOnLoad : MonoBehaviour
+    public class OverrideDontDestroyOnLoad : MonoBehaviour
     {
         private void Start()
         {

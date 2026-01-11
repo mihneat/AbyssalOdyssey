@@ -26,7 +26,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.15, y: 2.15, z: 2.15}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6363196683483683694}
@@ -294,8 +294,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5881940126152712818}
   m_LocalRotation: {x: -0, y: 0.9999599, z: -0, w: -0.008960355}
-  m_LocalPosition: {x: 0, y: 0, z: -0.356}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.946}
+  m_LocalScale: {x: 2.15, y: 2.15, z: 2.15}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8783499562098722221}
@@ -303,7 +303,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.193, y: 0.411}
+  m_AnchoredPosition: {x: -0.28595, y: 0.7267}
   m_SizeDelta: {x: 0.245, y: 0.7252}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &8992567460447848684
@@ -380,9 +380,12 @@ GameObject:
   - component: {fileID: 4693197503585879806}
   - component: {fileID: 602700033396016721}
   - component: {fileID: 6955630477591409108}
+  - component: {fileID: 2827641245618951136}
   - component: {fileID: 7949880197965297943}
   - component: {fileID: 1057796372731732497}
   - component: {fileID: 4032046727928116251}
+  - component: {fileID: 5027302084173276913}
+  - component: {fileID: 6986745469320589421}
   - component: {fileID: 7473684283544267443}
   m_Layer: 7
   m_Name: HarpoonLauncher
@@ -418,7 +421,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7226399268326378279}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 50
   m_Drag: 7
   m_AngularDrag: 5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -489,6 +492,20 @@ MonoBehaviour:
   highlightOnHover: 0
   hideHighlight: []
   hoverPriority: 0
+--- !u!114 &2827641245618951136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7226399268326378279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8d4cc6cf300b3e4bb1411c4e041030c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teleportAllowed: 1
+  overrideHoverLock: 1
 --- !u!114 &7949880197965297943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -562,8 +579,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.05, y: 0.33, z: 1.4743997}
-  m_Center: {x: -2.10932e-10, y: -0.025903672, z: -0.23719966}
+  m_Size: {x: 0.1075, y: 0.7095, z: 3.16996}
+  m_Center: {x: 0, y: -0.05569289, z: -0.50997937}
 --- !u!114 &4032046727928116251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -579,7 +596,8 @@ MonoBehaviour:
   harpoonSpot: {fileID: 2770268448989133028}
   harpoonController: {fileID: 1768996369683981876}
   triggerController: {fileID: 3478655777235944632}
-  shootForce: 3
+  submergedDetector: {fileID: 5027302084173276913}
+  shootForce: 10
   retractSpeed: 15
   stopFactor: 10
   resistanceMeter: {fileID: 5038369969071957530}
@@ -590,6 +608,30 @@ MonoBehaviour:
   reelOut: {fileID: 8300000, guid: e752224ead50ee442be829027e8efdef, type: 3}
   reelIn: {fileID: 8300000, guid: 055d8a1b902595c41a39fcee39fce7b5, type: 3}
   shootClip: {fileID: 8300000, guid: fe99a25cee353504292daa0bc84e2002, type: 3}
+--- !u!114 &5027302084173276913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7226399268326378279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca61eef35bb090f4f9a1892d41d22672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6986745469320589421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7226399268326378279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e999a82823f62143a905498cb830c4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &7473684283544267443
 AudioSource:
   m_ObjectHideFlags: 0
@@ -745,7 +787,7 @@ Transform:
   m_GameObject: {fileID: 8465671673447584227}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0897, z: -0.4665}
+  m_LocalPosition: {x: 0, y: 0.192855, z: -1.002975}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -799,7 +841,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0.901305, y: -0.2125705, z: -1.290774}
-  - {x: 1.046, y: 0.06742917, z: -1.0959268}
+  - {x: 1.046, y: 0.17058417, z: -1.6324017}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.3

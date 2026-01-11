@@ -1,11 +1,11 @@
 using System;
 using UnityEngine;
 
-namespace Scripts.Player
+namespace Scripts.Volumes
 {
-    public class PlayerOxygenDetector : MonoBehaviour
+    public class SubmergedDetector : MonoBehaviour
     {
-        public event Action<bool> OnHeadSubmergeChanged;
+        public event Action<bool> OnSubmergedStatusChanged;
         
         private int airPocketCounter;
         private bool isSubmerged = true;
@@ -40,12 +40,12 @@ namespace Scripts.Player
             if (airPocketCounter <= 0 && !isSubmerged)
             {
                 isSubmerged = true;
-                OnHeadSubmergeChanged?.Invoke(isSubmerged);
+                OnSubmergedStatusChanged?.Invoke(isSubmerged);
             }
             else if (airPocketCounter > 0 && isSubmerged)
             {
                 isSubmerged = false;
-                OnHeadSubmergeChanged?.Invoke(isSubmerged);
+                OnSubmergedStatusChanged?.Invoke(isSubmerged);
             }
         }
     }

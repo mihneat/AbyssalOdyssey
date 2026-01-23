@@ -1,14 +1,18 @@
+using System;
 using Scripts.Helper;
 using Scripts.Player;
+using Scripts.Player.VR;
 using UnityEngine;
 
 namespace Scripts.Submarine
 {
     public class SubmarineDriveInteractable : MonoBehaviour, IPlayerInteractable
     {
+        [SerializeField] private int priority;
         [SerializeField] private SubmarineController submarineController;
         
         public string GetInteractActionName() => "Drive";
+        public int GetPriority() => priority;
 
         public void Interact(PlayerController playerController)
         {
@@ -28,6 +32,12 @@ namespace Scripts.Submarine
             
             // Communicate the interaction to the SubmarineController
             submarineController.StartDriving(playerController);
+        }
+
+        public void Interact(PlayerControllerVR playerController)
+        {
+            // TODO idfk
+            Debug.Log("[SubmarineDriveInteractable] TODO Drive meee");
         }
     }
 }

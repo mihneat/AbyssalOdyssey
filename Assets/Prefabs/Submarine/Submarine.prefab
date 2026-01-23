@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7449150422456056788}
   - component: {fileID: 5288884303549523132}
-  - component: {fileID: 66751044802943788}
   - component: {fileID: 3314641782480651871}
   m_Layer: 10
   m_Name: HullCollision
@@ -57,21 +56,6 @@ CapsuleCollider:
   m_Height: 11.7
   m_Direction: 0
   m_Center: {x: 0, y: -0.28, z: 0}
---- !u!114 &66751044802943788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 993487444665750491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65a5898915e77c74d8b2ac9fa240602a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactActionName: Enter Submarine
-  entryPoint: {fileID: 7652810308237041790}
-  interiorInteractablesParent: {fileID: 3329336530125248782}
 --- !u!54 &3314641782480651871
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -408,6 +392,78 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.12, y: 1, z: 3.61}
   m_Center: {x: -4.53, y: 0.22, z: 0}
+--- !u!1 &7540368743349945172
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1512250876446885836}
+  - component: {fileID: 2567835217236828165}
+  - component: {fileID: 2156740786144682375}
+  m_Layer: 0
+  m_Name: HatchInteractable
+  m_TagString: Interactable
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1512250876446885836
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7540368743349945172}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.137, y: 2.165, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5138707717135541667}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &2567835217236828165
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7540368743349945172}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.13
+  m_Height: 1.51
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2156740786144682375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7540368743349945172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65a5898915e77c74d8b2ac9fa240602a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactActionName: Enter Submarine
+  entryPoint: {fileID: 7652810308237041790}
+  interiorInteractablesParent: {fileID: 3329336530125248782}
+  airPocket: {fileID: 1009054799194234368}
 --- !u!1 &7589640385880622660
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,6 +513,8 @@ MonoBehaviour:
   interactActionName: Exit Submarine
   exitPoint: {fileID: 2213478707137901008}
   interiorInteractablesParent: {fileID: 3329336530125248782}
+  airPocket: {fileID: 1009054799194234368}
+  hatchInteractable: {fileID: 7540368743349945172}
 --- !u!54 &8925926895202908555
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -537,6 +595,7 @@ Transform:
   - {fileID: 405387686402083046}
   - {fileID: 7449150422456056788}
   - {fileID: 6661202014392204703}
+  - {fileID: 1512250876446885836}
   m_Father: {fileID: 3801590755745612273}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &8746920978308273965
@@ -575,6 +634,7 @@ Transform:
   - {fileID: 7652810308237041790}
   - {fileID: 2213478707137901008}
   - {fileID: 196857084422888498}
+  - {fileID: 8593006102344105707}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &2286692892210040105
@@ -869,3 +929,70 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.7, y: 0.14, z: 3.6}
   m_Center: {x: 4.2, y: -0.34, z: 0}
+--- !u!1001 &6526517716553000264
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3801590755745612273}
+    m_Modifications:
+    - target: {fileID: 3301882679231028131, guid: 06c70f224ffcad143b0cabcc5c406f0d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3301882679231028131, guid: 06c70f224ffcad143b0cabcc5c406f0d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3301882679231028131, guid: 06c70f224ffcad143b0cabcc5c406f0d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3301882679231028131, guid: 06c70f224ffcad143b0cabcc5c406f0d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3301882679231028131, guid: 06c70f224ffcad143b0cabcc5c406f0d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3301882679231028131, guid: 06c70f224ffcad143b0cabcc5c406f0d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3301882679231028131, guid: 06c70f224ffcad143b0cabcc5c406f0d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3301882679231028131, guid: 06c70f224ffcad143b0cabcc5c406f0d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3301882679231028131, guid: 06c70f224ffcad143b0cabcc5c406f0d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3301882679231028131, guid: 06c70f224ffcad143b0cabcc5c406f0d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6093995602864995144, guid: 06c70f224ffcad143b0cabcc5c406f0d, type: 3}
+      propertyPath: m_Name
+      value: AirPocket
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 06c70f224ffcad143b0cabcc5c406f0d, type: 3}
+--- !u!1 &1009054799194234368 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6093995602864995144, guid: 06c70f224ffcad143b0cabcc5c406f0d, type: 3}
+  m_PrefabInstance: {fileID: 6526517716553000264}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8593006102344105707 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3301882679231028131, guid: 06c70f224ffcad143b0cabcc5c406f0d, type: 3}
+  m_PrefabInstance: {fileID: 6526517716553000264}
+  m_PrefabAsset: {fileID: 0}

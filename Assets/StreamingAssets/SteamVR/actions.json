@@ -74,6 +74,10 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/default/in/Interact",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },
@@ -199,7 +203,8 @@
       "/actions/default/in/ResetHarpoon": "Reset Harpoon",
       "/actions/default/in/Move": "Move",
       "/actions/default/in/SwimVertical": "Swim Vertical",
-      "/actions/default/in/Jump": "Jump"
+      "/actions/default/in/Jump": "Jump",
+      "/actions/default/in/Interact": "Interact"
     }
   ]
 }

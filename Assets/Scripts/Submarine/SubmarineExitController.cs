@@ -47,8 +47,9 @@ namespace Scripts.Submarine
             Physics.IgnoreLayerCollision(7, 10, false);
             
             interiorInteractablesParent.SetActive(false);
-            airPocket.SetActive(false);
             hatchInteractable.SetActive(true);
+
+            airPocket.transform.localPosition = new Vector3(100000, 100000, 100000);
         }
     }
 }

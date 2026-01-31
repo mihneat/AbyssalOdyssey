@@ -78,6 +78,18 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/default/in/SubmarineMove",
+      "type": "vector2"
+    },
+    {
+      "name": "/actions/default/in/SubmarineLook",
+      "type": "vector2"
+    },
+    {
+      "name": "/actions/default/in/SubmarineExit",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },
@@ -114,7 +126,7 @@
   "action_sets": [
     {
       "name": "/actions/default",
-      "usage": "single"
+      "usage": "leftright"
     },
     {
       "name": "/actions/platformer",
@@ -204,7 +216,10 @@
       "/actions/default/in/Move": "Move",
       "/actions/default/in/SwimVertical": "Swim Vertical",
       "/actions/default/in/Jump": "Jump",
-      "/actions/default/in/Interact": "Interact"
+      "/actions/default/in/Interact": "Interact",
+      "/actions/default/in/SubmarineMove": "Submarine Move",
+      "/actions/default/in/SubmarineLook": "Submarine Look",
+      "/actions/default/in/SubmarineExit": "Submarine Exit"
     }
   ]
 }

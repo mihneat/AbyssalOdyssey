@@ -25,6 +25,7 @@ namespace Scripts.Player.VR
         private float swimValue;
         private bool shouldJumpNextFrame;
         
+        public bool ManuallyLockInput { get => manuallyLockInput; set => manuallyLockInput = value; }
         private bool manuallyLockInput;
 
         private Environment currEnvironment = Environment.Underwater;
@@ -103,6 +104,9 @@ namespace Scripts.Player.VR
 
         private void PlayerJump()
         {
+            if (manuallyLockInput)
+                return;
+            
             if (!shouldJumpNextFrame)
                 return;
 
@@ -132,6 +136,7 @@ namespace Scripts.Player.VR
             currEnvironment = newEnvironment;
         }
         
+        // Used by animation events
         public void LockInput()
         {
             if (!Application.isPlaying)
@@ -140,6 +145,7 @@ namespace Scripts.Player.VR
             manuallyLockInput = true;
         }
 
+        // Used by animation events
         public void UnlockInput()
         {
             if (!Application.isPlaying)

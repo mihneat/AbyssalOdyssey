@@ -21,6 +21,8 @@ namespace Scripts.Player.VR
         private readonly Stack<IPlayerInteractable> mostRecentInteractables = new();
 
         private SortedSet<IPlayerInteractable> interactables = new();
+        
+        private bool ignoreInteractions;
 
         private void OnEnable()
         {
@@ -35,6 +37,9 @@ namespace Scripts.Player.VR
         public void AcceptInteractables(SortedSet<IPlayerInteractable> newInteractables)
         {
             // TODO: Maybe refuse interactables if already holding something in the hand
+
+            if (ignoreInteractions)
+                return;
             
             interactables = newInteractables;
             UpdateInteractionText();
@@ -82,6 +87,12 @@ namespace Scripts.Player.VR
                 return;
             }
             
+            if (ignoreInteractions)
+            {
+                interactionText.text = "";
+                return;
+            }
+            
             IPlayerInteractable currInteractable = interactables.First();
             currInteractable.Interact(playerController);
         }
@@ -119,9 +130,26 @@ namespace Scripts.Player.VR
                 interactionText.text = "";
                 return;
             }
+
+            if (ignoreInteractions)
+            {
+                interactionText.text = "";
+                return;
+            }
             
             IPlayerInteractable currInteractable = interactables.First();
             interactionText.text = currInteractable.GetInteractActionName();
+        }
+        
+        public void ToggleComponent(bool state)
+        {
+            ignoreInteractions = !state;
+            
+            if (state == false)
+            {
+                interactionText.text = "";
+                interactables.Clear();
+            }
         }
     }
 }

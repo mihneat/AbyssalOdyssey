@@ -2,6 +2,7 @@ using System;
 using Scripts.Helper;
 using Scripts.Player;
 using Scripts.Player.VR;
+using Scripts.Submarine.VR;
 using UnityEngine;
 
 namespace Scripts.Submarine
@@ -9,7 +10,9 @@ namespace Scripts.Submarine
     public class SubmarineDriveInteractable : MonoBehaviour, IPlayerInteractable
     {
         [SerializeField] private int priority;
+        [SerializeField] private Transform vrPlayerSlot;
         [SerializeField] private SubmarineController submarineController;
+        [SerializeField] private SubmarineControllerVR submarineControllerVR;
         
         public string GetInteractActionName() => "Drive";
         public int GetPriority() => priority;
@@ -36,8 +39,27 @@ namespace Scripts.Submarine
 
         public void Interact(PlayerControllerVR playerController)
         {
-            // TODO idfk
-            Debug.Log("[SubmarineDriveInteractable] TODO Drive meee");
+            // Attach them to the ship
+            playerController.GetComponent<Rigidbody>().isKinematic = true;
+            playerController.GetComponent<Collider>().isTrigger = true;
+            playerController.transform.parent = submarineControllerVR.transform;
+            Vector3 prevPlayerLocalPosition = playerController.transform.localPosition;
+            
+            // Teleport the player to the appropriate slot
+            playerController.transform.localPosition = vrPlayerSlot.localPosition;
+            
+            // Disable hand interactors
+            HandInteractor[] handInteractors = FindObjectsByType<HandInteractor>(FindObjectsSortMode.None);
+            foreach (HandInteractor handInteractor in handInteractors)
+                handInteractor.ToggleComponent(false);
+
+            // Lock player input
+            playerController.ManuallyLockInput = true;
+            
+            // Communicate the interaction to the SubmarineControllerVR
+            submarineControllerVR.StartDriving(playerController, prevPlayerLocalPosition);
+            
+            // TODO: Change player's forward direction to be the submarine's
         }
     }
 }

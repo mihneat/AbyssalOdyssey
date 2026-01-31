@@ -161,6 +161,30 @@ namespace Valve.VR
             }
         }
         
+        public virtual SteamVR_Action_Vector2 SubmarineMove
+        {
+            get
+            {
+                return SteamVR_Actions.default_SubmarineMove;
+            }
+        }
+        
+        public virtual SteamVR_Action_Vector2 SubmarineLook
+        {
+            get
+            {
+                return SteamVR_Actions.default_SubmarineLook;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean SubmarineExit
+        {
+            get
+            {
+                return SteamVR_Actions.default_SubmarineExit;
+            }
+        }
+        
         public virtual SteamVR_Action_Vibration Haptic
         {
             get

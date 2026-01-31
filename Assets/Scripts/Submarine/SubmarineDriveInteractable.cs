@@ -1,4 +1,5 @@
 using System;
+using Scripts.Harpoon;
 using Scripts.Helper;
 using Scripts.Player;
 using Scripts.Player.VR;
@@ -42,6 +43,7 @@ namespace Scripts.Submarine
             // Attach them to the ship
             playerController.GetComponent<Rigidbody>().isKinematic = true;
             playerController.GetComponent<Collider>().isTrigger = true;
+            playerController.transform.forward = submarineController.transform.forward;
             playerController.transform.parent = submarineControllerVR.transform;
             Vector3 prevPlayerLocalPosition = playerController.transform.localPosition;
             
@@ -56,10 +58,11 @@ namespace Scripts.Submarine
             // Lock player input
             playerController.ManuallyLockInput = true;
             
+            // Hack: Parent the harpoon launcher to the submarine
+            FindFirstObjectByType<HarpoonLauncherController>().transform.parent = submarineController.transform;
+            
             // Communicate the interaction to the SubmarineControllerVR
             submarineControllerVR.StartDriving(playerController, prevPlayerLocalPosition);
-            
-            // TODO: Change player's forward direction to be the submarine's
         }
     }
 }

@@ -184,6 +184,11 @@ namespace Scripts.Harpoon
             rb.isKinematic = true;
             harpoonLauncherHand = hand;
 
+            // Harpoon = 6
+            // HarpoonLauncher = 7
+            // SubmarineFloor = 11
+            Physics.IgnoreLayerCollision(6, 11, true);
+            Physics.IgnoreLayerCollision(7, 11, true);
         }
 
         private void HandleOnDetachedFromHand(Hand hand)
@@ -194,11 +199,17 @@ namespace Scripts.Harpoon
 
             if (harpoonLauncherHand != null)
                 HandleReleased();
-            
+
             harpoonLauncherHand = null;
-            
+
             // Reset the trigger rotation
             triggerController.SetInterpolationValue(0.0f);
+            
+            // Harpoon = 6
+            // HarpoonLauncher = 7
+            // SubmarineFloor = 11
+            Physics.IgnoreLayerCollision(6, 11, false);
+            Physics.IgnoreLayerCollision(7, 11, false);
         }
 
         private void HandleOnShootHarpoon(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource, bool isClicked)

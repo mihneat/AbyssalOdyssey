@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Scripts.Harpoon;
 using Scripts.Player.VR;
 using UnityEngine;
 using Valve.VR;
@@ -116,6 +117,9 @@ namespace Scripts.Submarine.VR
             
             // Unlock player input
             currPlayerController.ManuallyLockInput = false;
+            
+            // Hack: Parent the harpoon launcher to the submarine
+            FindFirstObjectByType<HarpoonLauncherController>().transform.parent = null;
             
             currPlayerController = null;
         }

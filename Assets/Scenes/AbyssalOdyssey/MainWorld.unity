@@ -7975,7 +7975,7 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-    - Key: 4
+    - Key: 1.5
       Value:
         m_PersistentCalls:
           m_Calls:
@@ -8003,7 +8003,7 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-    - Key: 5
+    - Key: 3
       Value:
         m_PersistentCalls:
           m_Calls:

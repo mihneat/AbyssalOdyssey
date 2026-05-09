@@ -5,6 +5,7 @@ using Scripts.Player;
 using Scripts.Player.VR;
 using Scripts.Submarine.VR;
 using UnityEngine;
+using Valve.VR.InteractionSystem;
 
 namespace Scripts.Submarine
 {
@@ -57,6 +58,9 @@ namespace Scripts.Submarine
 
             // Lock player input
             playerController.ManuallyLockInput = true;
+            
+            // Turn off SnapTurn
+            FindFirstObjectByType<SnapTurn>().enabled = false;
             
             // Hack: Parent the harpoon launcher to the submarine
             FindFirstObjectByType<HarpoonLauncherController>().transform.parent = submarineController.transform;

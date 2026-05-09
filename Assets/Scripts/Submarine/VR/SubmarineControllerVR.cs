@@ -118,6 +118,9 @@ namespace Scripts.Submarine.VR
             // Unlock player input
             currPlayerController.ManuallyLockInput = false;
             
+            // Turn on SnapTurn
+            FindFirstObjectByType<SnapTurn>().enabled = true;
+            
             // Hack: Parent the harpoon launcher to the submarine
             FindFirstObjectByType<HarpoonLauncherController>().transform.parent = null;
             
